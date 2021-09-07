@@ -1,22 +1,34 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, StatusBar } from 'react-native'
 import PropTypes from 'prop-types'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+
+const weatherOptions = {
+  Haze: {
+    iconName: "weather-hail",
+    gradient: ["#4DA0B0", "#D39D38"]
+  }
+}
+
 
 
 export default function Weather({temp}) {
   return (
-    <View style={styles.container}>
-      <View style={styles.harfContainer}>
-        <MaterialCommunityIcons name="weather-lightning-rainy" size={96} color="black" />
-        <Text style={styles.temp}>{temp}°</Text>
-      </View>
-      <View style={styles.harfContainer} />
-    </View>
+      <LinearGradient
+        colors={weatherOptions["Haze"].gradient}
+        style={styles.container}>
+        <StatusBar barStyle="light-content"/>
+        <View style={styles.harfContainer}>
+          <MaterialCommunityIcons name={weatherOptions["Haze"].iconName} size={96} color="white" />
+          <Text style={styles.temp}>{temp}°</Text>
+        </View>
+        <View style={styles.harfContainer} />
+      </LinearGradient>
   )
 }
 
-Weather.PropTypes = {
+Weather.propTypes = {
   temp: PropTypes.number.isRequired,
   condition: PropTypes.oneOf(["Thunderstorm", "Drizzle", "Rain", "Snow", "Atmosphere", "Clear", "Clouds", "Haze", "Mist", "Dust"]).isRequired
 }
@@ -28,7 +40,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   temp: {
-    fontSize: 42
+    fontSize: 42,
+    color: "white"
   }, 
   harfContainer: {
     flex: 1,
